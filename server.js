@@ -69,3 +69,29 @@ app.post('/movies', (req, res) => {
     // Return the created movie with 201 status
     res.status(201).json(newMovie);
 });
+
+// PUT /movies/:id - Update an existing movie
+app.put('/movies/:id', (req, res) => {
+    const movieId = parseInt(req.params.id);
+    const { title, director, year, genre } = req.body;
+  
+    // Find the movie to update
+    const movieIndex = movies.findIndex(m => m.id === movieId);
+  
+    if (movieIndex === -1) {
+          return res.status(404).json({ error: 
+    Movie not found' });
+    }
+  
+    // Update the movie
+    movies[movieIndex] = {
+        id: movieId,
+        title,
+        director,
+        year,
+        genre
+    };
+  
+    // Return the updated movie
+    res.json(movies[movieIndex]);
+});
