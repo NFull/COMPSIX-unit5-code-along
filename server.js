@@ -79,8 +79,7 @@ app.put('/movies/:id', (req, res) => {
     const movieIndex = movies.findIndex(m => m.id === movieId);
   
     if (movieIndex === -1) {
-          return res.status(404).json({ error: 
-    Movie not found' });
+          return res.status(404).json({ error: 'Movie not found' });
     }
   
     // Update the movie
