@@ -25,8 +25,7 @@ app.get('/', (req, res) => {
 
 // GET /movies - Return all movies
 app.get('/movies', (req, res) => {
-      // Sends back the movies as JSON as the 
-response to the request
+      // Sends back the movies as JSON as the response to the request
       res.json(movies);
 });
 
