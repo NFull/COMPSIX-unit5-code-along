@@ -48,3 +48,24 @@ app.get('/movies/:id', (req, res) => {
         res.status(404).json({ error: 'Movie not found' });
     }
 });
+
+// POST /movies - Create a new movie
+app.post('/movies', (req, res) => {
+    // Extract data from request body
+    const { title, director, year, genre } = req.body;
+  
+  	// Create new movie with generated ID
+    const newMovie = {
+        id: movies.length + 1,
+        title,
+        director,
+        year,
+        genre
+    };
+  
+    // Add to movies array
+    movies.push(newMovie);
+  
+    // Return the created movie with 201 status
+    res.status(201).json(newMovie);
+});
