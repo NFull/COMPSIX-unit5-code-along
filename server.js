@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
+// Middleware to parse JSON requests
+app.use(express.json());
+
 const movies = [
   { id: 1, title: "The Shawshank Redemption", director: "Frank Darabont", year: 1994, genre: "Drama" },
   { id: 2, title: "The Godfather", director: "Francis Ford Coppola", year: 1972, genre: "Crime" },
@@ -9,10 +12,6 @@ const movies = [
   { id: 4, title: "The Dark Knight", director: "Christopher Nolan", year: 2008, genre: "Action" }
 ];
 
-// Middleware to parse JSON requests
-app.use(express.json());
-
-// Sample movie data not shown
 
 // Start the server
 app.listen(port, () => {
@@ -94,3 +93,31 @@ app.put('/movies/:id', (req, res) => {
     // Return the updated movie
     res.json(movies[movieIndex]);
 });
+
+// DELETE /movies/:id - Delete a movie
+app.delete('/movies/:id', (req, res) => {
+    const movieId = parseInt(req.params.id);
+  
+    // Find the movie index
+    const movieIndex = movies.findIndex(m => m.id === movieId);
+  
+    if (movieIndex === -1) {
+        return res.status(404).json({ error: 'Movie not found' });
+    }
+  
+    // Remove the movie from array
+    const deletedMovie = movies.splice(movieIndex, 1)[0];
+  
+    // Return the deleted movie
+    res.json({ message: 'Movie deleted successfully', movie: deletedMovie });
+});
+
+// Only start server when running directly, not when testing
+if (require.main === module) {
+    app.listen(port, () => {
+         console.log(`API server running at
+    http://localhost:${port}`);
+    });
+}
+
+module.exports = app;
